@@ -51,7 +51,7 @@ $$ \frac{Tempo\ de\ Execucão_{y}}{Tempo\ de\ Execucão_{x}}$$
 - **Tempo de Execução**:
   - *Wall Clock Time*:
     - Inclui os *overheads* do sistema.
-  - *~~C~~PU Time*:
+  - CPU Time*:
     - Apenas o tempo de computação do programa.
 
 ## Princípios de *design* de computadores
