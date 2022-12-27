@@ -3,3 +3,4 @@
 - [Apresentação da UC](./chapter_1.md)
 - [Otimização de Código Sequencial](./chapter_2.md)
 - [Hierarquia de Memória](./chapter_3.md)
+- [Paralismo de Dados e *Multithreading* em Uniprocessadores](./chapter_4.md)
