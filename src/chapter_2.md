@@ -63,7 +63,34 @@ $$ CPU_{time} = \#Instr * CPI * Clk_{cycle} $$
 
 ![image Multiple Issue](images/cpi.png)
 
-## Caso de Estudo
+## Otimizações Comuns de Compiladores
 
-- Efetuar uma operação aritmética para todos os elementos de um vetor.
-- 
+- ***Loops***
+  - Identifica as variáveis de indução que são incrementadas/decrementadas por um valor fixo em cada iteração do ciclo (p.e. `j = i * 4 + 1` passa a `j += 5`);
+  - **Fissão**: parte o *loop* em múltiplos *loops*, sendo que cada um será responsável por apenas parte do corpo do *loop* original;
+  - **Fusão**: combina múltiplos *loops* de forma a reduzir o *overhead*;
+  - **Inversão**: altera o *while loop* genérico para um *do-while*;
+  - **Intercâmbio**: troca os *loops* internos com os *loops* externos;
+  - Movimenta o invariante do *loop* de forma a melhorar o desempenho do programa;
+  - ***Loop Unrolling***: duplica o corpo do *loop* múltiplas vezes;
+  - ***Loop Splitting***: parte o *loop* em múltiplos *loops* com o mesmo corpo, no entanto, estes iteram em partes contíguas dentro dos limites do indíce pretendido.
+- ***Data Flow***
+  - Elimina/Partilha subexpressões comuns;
+  - Reduz os custos das operações, isto é, as operações muito custosas são substituídas por operações mais "baratas";
+  - ***Constant Folding***: substitui expressões constantes (p.e. `3 + 4`) pelo seu valor final (neste caso, `7`);
+  - ***Dead Store Elimination***: remove variáveis atribuídas que não voltarão a ser lidas.
+- ***Code Generation***
+  - **Alocação de Registos**: as variáveis mais utilizadas são mantidas em registos do processador;
+  - **Seleção de Instruções**: seleciona 1 forma de múltiplas disponíveis para efetuar uma operação;
+  - **Agendamento de Instruções**: evita *pipeline stalls*;
+  - **Re-materialização**: Recalcula um valor, ao invés de o ir buscar à memória.
+- **Outras**
+  - ***Bounds-checking elimination***;
+  - **Reordenação de blocos de código**: altera a ordem de blocos básicos;
+  - **Eliminição de código inutilizado**;
+  - ***Inline Expansion***: insere o corpo de uma função na chamada à função.
+- **Limitações**
+  - *Memory aliasing* e efeitos secundários das funções;
+  - Tipicamente, os compiladores não tentam melhorar a complexidade dos algoritmos;
+  - Tipicamente, os compiladores apenas lidam com uma parte do programa de cada vez;
+  - Pode gerar-se um *overhead* no tempo de compilação devido às otimizações do compilador.
