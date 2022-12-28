@@ -4,3 +4,4 @@
 - [Otimização de Código Sequencial](./chapter_2.md)
 - [Hierarquia de Memória](./chapter_3.md)
 - [Paralismo de Dados e *Multithreading* em Uniprocessadores](./chapter_4.md)
+- [Aceleradores de Computação: GPU e CUDA](./chapter_5.md)
