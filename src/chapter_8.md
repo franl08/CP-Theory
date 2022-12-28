@@ -162,3 +162,37 @@ $$Max_{speedup} = \frac{1}{serial\ fraction\ of\ work}$$
   - `System.nanoTime()` em Java 4.
 
 ### Como combinar os resultados das várias medições?
+
+- Média;
+  - Afetada por valores extremamente altos/baixos;
+  - Adicionalmente, podemos mostrar o desvio padrão entre as diversas medidas.
+- Melhor medida;
+  - Valor nas condições ideias.
+- Média dos k-melhores;
+  - Remove os *outsiders*.
+- Mediana.
+  - Mais robusta para grandes variações.
+
+### Apresentação de Resultados
+
+- Apresentação de formas legíveis e compactas;
+  - Tabelas ou Gráficos.
+- Devem colocar-se legendas claras nas tabelas e gráficos;
+- Não se devem extrapolar valores;
+  - Utilizar sempre o número de dígitos significantes.
+- Usar incrementos constantes no eixo do $xx$ e do $yy$;
+  - Escalas podem levar a conclusões erradas;
+  - Representar o 1 ou o 0.
+- Justificar os resultados obtidos.
+  - Investigar/comentar valores inesperados.
+
+### Erros comuns
+
+- Não documentar o ambiente experimental ou incluír detalhes irrelevantes;
+- Não repetir as experiências;
+  - Reduz o impacto do SO, do *garbage collector*, etc...
+- Inclusão do tempo de I/O;
+  - Leituras de disco;
+  - `printf` (para, por exemplo, apresentar informação de *debug*).
+- Não considerar o *overhead* de leitura/resolução;
+- Não aquecer a *cache*.

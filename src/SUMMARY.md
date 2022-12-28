@@ -7,3 +7,4 @@
 - [Aceleradores de Computação: GPU e CUDA](./chapter_5.md)
 - [Introdução à Programação com Memória Partilhada](./chapter_6.md)
 - [Programação Paralela com Memória Partilhada](./chapter_7.md)
+- [Medição e Otimização de Desempenho em Memória Partilhada](./chapter_8.md)
