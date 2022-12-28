@@ -8,3 +8,4 @@
 - [Introdução à Programação com Memória Partilhada](./chapter_6.md)
 - [Programação Paralela com Memória Partilhada](./chapter_7.md)
 - [Medição e Otimização de Desempenho em Memória Partilhada](./chapter_8.md)
+- [Programação em Memória Distribuída com Passagem de Mensagens](./chapter_9.md)
