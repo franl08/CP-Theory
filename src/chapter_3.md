@@ -116,21 +116,21 @@ $$Miss\_penalty_{level_i} = (Hit\ rate \times Hit\ time \times Miss\ rate \times
 
 Como é que a hierarquia de memória influencia o $T_{exec}$?
 
-- Cada acesso à memória irá originar ciclos adicionais na execução do programa ($\#CC_{MEM}$) devido aos *misses*:
+- Cada acesso à memória irá originar ciclos adicionais na execução do programa ($\char"0023CC_{MEM}$) devido aos *misses*:
 
-$$T_{exec} = (\#CC + \#CC_{MEM}) \times T_{CC}$$
+$$T_{exec} = (\char"0023CC + \char"0023CC_{MEM}) \times T_{CC}$$
 
-- Cada *miss* implicará um aumento do $\#CC$ em ciclos de *miss penalty*, logo:
+- Cada *miss* implicará um aumento do $\char"0023CC$ em ciclos de *miss penalty*, logo:
 
-$$\#CC_{MEM} = no.\ miss \times miss\ penalty$$
+$$\char"0023CC_{MEM} = no.\ miss \times miss\ penalty$$
 
 Sendo que, o $no.\ miss$ será dado por:
 
 $$miss\ rate \times no\ acessos\ mem$$
 
-- Assim, visto que $\#CC = \#I \times CPI$, temos que:
+- Assim, visto que $\char"0023CC = \char"0023I \times CPI$, temos que:
 
-$$T_{exec} = \#I \times (CPI_{CPU} + CPI_{MEM}) \times T_{CC}$$
+$$T_{exec} = \char"0023I \times (CPI_{CPU} + CPI_{MEM}) \times T_{CC}$$
 
 - Em que:
   - $CPI_{CPU}$: número de ciclos que o processador precisa, em média, para executar cada instrução;
