@@ -15,7 +15,7 @@
 
 - Permite acelerar os acessos à memória através de uma hierarquia;
   - "Os programas tendem a aceder a uma porção limitada de memória num dado período de tempo".
-- Permite utilizar memória mais rápida para armazenar a informação usada mais frequentemente/recentement;
+- Permite utilizar memória mais rápida para armazenar a informação usada mais frequentemente/recentemente;
 - Permite tirar partido da largura de banda, uma vez que a informação transferida entre diferentes níveis da hierarquia é efetuada por blocos.
 
 ### Localidade Temporal
@@ -48,8 +48,8 @@ Se um elemento de memória é acedido pelo CPU, então elementos com endereços 
 
 ### Terminologia
 
-- **Linha**: A *cache* encontra-se dividida em linhas. Casa linha terá o seu endereço (índice) e tem a capacidade de um bloco;
-- **Bloco**: Quantidade de informaçõa que é transferida de cada vez da memória central para a *cache* (ou entre níveis de *cache*). É igual à capacidade da linha;
+- **Linha**: A *cache* encontra-se dividida em linhas. Cada linha terá o seu endereço (índice) e tem a capacidade de um bloco;
+- **Bloco**: Quantidade de informação que é transferida de cada vez da memória central para a *cache* (ou entre níveis de *cache*). É igual à capacidade da linha;
 - ***Hit***: Diz-se que ocorreu um *hit* quando o elemento de memória acedido pelo CPU se encontra em *cache*;
 - ***Miss***: Diz-se que ocorreu um *miss* quando o elemento de memória acedido pela CPU não se encontra em *cache*, sendo necessário lê-lo do nível inferior da hierarquia.
 - ***Hit Rate***: Percentagem de *hits* ocorridos relativamente ao total de acessos à memória;
@@ -98,8 +98,8 @@ $$Mem_{stall\-cycles} = IC \times \frac{Misses}{Instruction} \times Miss\ Penalt
 $$\frac{Misses}{Instruction} = \frac{Miss\ rate \times Memory\ accesses}{Instruction\ Count} = Miss\ Rate \times \frac{Memory\ Accesses}{Instruction}$$
 
 - Para cada nível $i$ adicional de *cache*:
-$$Mem\_accesses_{level_i} = \frac{Misses}{Instruction_{level_i - 1}}$$
-$$Miss\_penalty_{level_i} = (Hit\ rate \times Hit\ time \times Miss\ rate \times Miss\ penalty)_{level_i + 1}$$
+$$Mem\_{accesses}_{level_i} = \frac{Misses}{Instruction_{level_i - 1}}$$
+$$Miss\_{penalty}_{level_i} = (Hit\ rate \times Hit\ time \times Miss\ rate \times Miss\ penalty)_{level_i + 1}$$
 
 
 ### *Miss Rates*
@@ -126,7 +126,7 @@ $$ \\#CC_{MEM} = no.\ miss \times miss\ penalty$$
 
 Sendo que, o $no.\ miss$ será dado por:
 
-$$miss\ rate \times no\ acessos\ mem$$
+$$miss\ rate \times no.\ acessos\ mem$$
 
 - Assim, visto que $ \\#CC =  \\#I \times CPI$, temos que:
 
@@ -144,7 +144,7 @@ $$CPI_{MEM} = \\% acessos\ Mem \times miss\ rate \times miss\ penalty$$
   - Acesso a dados (instruções de *Load* ou *Store*);
   - Busca de instruções.
 - Como estes têm comportamentos diferentes, usam-se percentagens diferentes:
-  - **Dados**: Apenas uma determinada percentagem de instruções irá aceder à memória ($\%Mem$), pelo que, $missrate_D$ referir-se-á ao acesso a dados;
+  - **Dados**: Apenas uma determinada percentagem de instruções irá aceder à memória ($\\%Mem$), pelo que, $missrate_D$ referir-se-á ao acesso a dados;
   - **Instruções**: Todas as instruções são lidas da memória, logo a percentagem de acesso à memória será de 100\%, $missrate_I$ referir-se-á ao acesso às instruções;
   - Geralmente, a $missrate_I$ é menor que a $missrate_D$ devido à utilização da localidade espacial.
 - Temos, então:
@@ -160,7 +160,7 @@ $$CPI_{MEM} = (missrate_I + \\% Mem \times missrate_D) \times misspenalty$$
 - **Consistência**
   - Ocorre quando um valor escrito deverá ser devolvido por uma leitura;
   - Se um processador escrever numa localização A e, posteriormente, numa localização B, qualquer processador que vir o novo valor de B, deverá também ver o valor de A;
-  - Ou seja, a consistência deverá definir o comportamento para escritas e leituras respeito o acesso a outras localizações de memórias.
+  - Ou seja, a consistência deverá definir o comportamento para escritas e leituras respeitando o acesso a outras localizações de memórias.
 
 ### Forçar a Coerência
 
@@ -198,7 +198,7 @@ $$CPI_{MEM} = (missrate_I + \\% Mem \times missrate_D) \times misspenalty$$
   - Tempo de acesso;
     - Tempo entre um pedido de leitura e a chegada da *word* pretendida.
   - Tempo de ciclo.
-    - Tempo minímio entre pedidos não relacionados à memória.
+    - Tempo mínimo entre pedidos não relacionados à memória.
 - A memória *SRAM* tem uma baixa latência, pelo que é utilizada para *cache*;
 - Organizando os *chips* de *DRAM* em diversas pilhas providenciará uma grande largura de banda que deve ser utilizada para a memória principal.
 - **SRAM**:
@@ -206,9 +206,9 @@ $$CPI_{MEM} = (missrate_I + \\% Mem \times missrate_D) \times misspenalty$$
   - Precisa de 6 transístores por *bit*.
 - **DRAM**:
   - Deve ser reescrita depois de lida;
-  - Periodicamente, deve ser atualizada;
+  - Deve ser atualizada de forma periódica;
     - +/- 8ms (cerca de 5\% do tempo);
-    - Cada lina pode ser atualizada em simultâneo.
+    - Cada linha pode ser atualizada em simultâneo.
   - Um transístor por *bit*;
   - As linhas de endereços são multiplexadas.
     - Metade superior do endereço: *row access strobe* (RAS);
@@ -226,7 +226,7 @@ $$CPI_{MEM} = (missrate_I + \\% Mem \times missrate_D) \times misspenalty$$
 - Reduzir o *hit time*;
   - *Caches* de primeiro nível mais pequenas e simples;
   - Implementação de *way predict*.
-    - Especulativamente, seleciona um caminho dos disponíveis antes de iniciar um acesso normal à *cache*. Ao seguir apenas o caminho precisto, em vez de todos os disponíveis, poupará o consumo energético.
+    - Especulativamente, seleciona um caminho dos disponíveis antes de iniciar um acesso normal à *cache*. Ao seguir apenas o caminho previsto, em vez de todos os disponíveis, poupará a nível energético.
 - Aumentar a largura de banda;
   - Implementação de *pipelined caches*, *multibanked caches*, *non-blocking caches*.
 - Reduzir a *miss penalty*;
