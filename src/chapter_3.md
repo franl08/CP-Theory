@@ -138,7 +138,7 @@ $$T_{exec} =  \\#I \times (CPI_{CPU} + CPI_{MEM}) \times T_{CC}$$
 
 - Podemos calcular o $CPI_{MEM}$ da seguinte forma:
 
-$$CPI_{MEM} = \%acessos\ Mem \times miss\ rate \times miss\ penalty$$
+$$CPI_{MEM} = \% acessos\ Mem \times miss\ rate \times miss\ penalty$$
 
 - De notar que os acessos à memória devem-se a:
   - Acesso a dados (instruções de *Load* ou *Store*);
@@ -149,7 +149,7 @@ $$CPI_{MEM} = \%acessos\ Mem \times miss\ rate \times miss\ penalty$$
   - Geralmente, a $missrate_I$ é menor que a $missrate_D$ devido à utilização da localidade espacial.
 - Temos, então:
 
-$$CPI_{MEM} = (missrate_I + \%Mem \times missrate_D) \times misspenalty$$
+$$CPI_{MEM} = (missrate_I + \\% Mem \times missrate_D) \times misspenalty$$
 
 ## Coerência na *Cache*
 
