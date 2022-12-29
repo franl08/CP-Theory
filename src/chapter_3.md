@@ -138,7 +138,7 @@ $$T_{exec} =  \\#I \times (CPI_{CPU} + CPI_{MEM}) \times T_{CC}$$
 
 - Podemos calcular o $CPI_{MEM}$ da seguinte forma:
 
-$$CPI_{MEM} = \% acessos\ Mem \times miss\ rate \times miss\ penalty$$
+$$CPI_{MEM} = \\% acessos\ Mem \times miss\ rate \times miss\ penalty$$
 
 - De notar que os acessos à memória devem-se a:
   - Acesso a dados (instruções de *Load* ou *Store*);
