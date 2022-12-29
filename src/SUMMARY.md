@@ -10,3 +10,4 @@
 - [Medição e Otimização de Desempenho em Memória Partilhada](./chapter_8.md)
 - [Programação em Memória Distribuída com Passagem de Mensagens](./chapter_9.md)
 - [Algoritmos Paralelos (*Sorting*)](./chapter_10.md)
+- [De *Multicore* para *Manycore*](./chapter_11.md)
