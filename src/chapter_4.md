@@ -79,13 +79,13 @@
 
 - Os compiladores são elementos chave para dar dicas sobre se uma secção de código irá vetorizar ou nõa;
 - Devemos verificar se as iterações entre *loops* terão depedências de dados e/ou *if-statements*, pois, caso contrário, a vetorização será comprometida;
-- O custo de arquiteturas vetoriais é muito elevado, no entanto existem algumas variantes como extensões a processadores escalares, no entanto:
+- O custo de arquiteturas vetoriais é muito elevado, no entanto existem algumas variantes como extensões a processadores escalares, mas:
   - Não suportam acessos não unitários à memória, pelo que se deve ter cuidado na definição de estruturas de dados;
   - Também não suportam o *mask register*, *gather-scatter*, etc...
 
 ### Extensões a SIMD 
 
-- Aplicações de mídia operam em tipos de dados maius pequenos que tamanho nativo de uma *word*;
+- Aplicações de mídia operam em tipos de dados mais pequenos que tamanho nativo de uma *word*;
 - Limitações comparadas a arquiteturas vetoriais:
   - Número de operando de dados codificado no *op code*;
   - Não há modos de endereçamento sofisticados;
