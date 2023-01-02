@@ -1,0 +1,549 @@
+<!DOCTYPE HTML>
+<html lang="pt" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hierarquia de Memória - Teóricas de CP</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Apresentação da UC</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> Otimização de Código Sequencial</a></li><li class="chapter-item expanded "><a href="chapter_3.html" class="active"><strong aria-hidden="true">3.</strong> Hierarquia de Memória</a></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> Paralelismo de Dados e Multithreading em Uniprocessadores</a></li><li class="chapter-item expanded "><a href="chapter_5.html"><strong aria-hidden="true">5.</strong> Aceleradores de Computação: GPU e CUDA</a></li><li class="chapter-item expanded "><a href="chapter_6.html"><strong aria-hidden="true">6.</strong> Introdução à Programação com Memória Partilhada</a></li><li class="chapter-item expanded "><a href="chapter_7.html"><strong aria-hidden="true">7.</strong> Programação Paralela com Memória Partilhada</a></li><li class="chapter-item expanded "><a href="chapter_8.html"><strong aria-hidden="true">8.</strong> Medição e Otimização de Desempenho em Memória Partilhada</a></li><li class="chapter-item expanded "><a href="chapter_9.html"><strong aria-hidden="true">9.</strong> Programação em Memória Distribuída com Passagem de Mensagens</a></li><li class="chapter-item expanded "><a href="chapter_10.html"><strong aria-hidden="true">10.</strong> Algoritmos Paralelos (Sorting)</a></li><li class="chapter-item expanded "><a href="chapter_11.html"><strong aria-hidden="true">11.</strong> De Multicore para Manycore</a></li><li class="chapter-item expanded "><a href="chapter_12.html"><strong aria-hidden="true">12.</strong> Sistemas Top HPC nas listas do TOP500</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Teóricas de CP</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="hierarquia-de-memória"><a class="header" href="#hierarquia-de-memória">Hierarquia de Memória</a></h1>
+<h2 id="hiato-processador-memória"><a class="header" href="#hiato-processador-memória">Hiato Processador-Memória</a></h2>
+<ul>
+<li>Para cada instrução, deve ser feito o seguinte processo:
+<ul>
+<li>Ler Instrução;</li>
+<li>Ler Operando;</li>
+<li>Escrever Resultado.</li>
+</ul>
+</li>
+<li>O <strong>hiato processador-memória</strong> diz-nos:
+<ul>
+<li>&quot;A memória é incapaz de alimentar o processador com instruções e dados com uma taxa suficiente de forma a mantê-lo constantemente ocupado&quot;.</li>
+</ul>
+</li>
+<li>A causa para este problema é a diferente taxa de aumento do desempenho entre os processadores e a memória nos últimos anos;</li>
+<li>Trata-se de um dos principais obstáculos à melhoria do desempenho dos sistemas de computação.</li>
+</ul>
+<h2 id="princípio-da-localidade"><a class="header" href="#princípio-da-localidade">Princípio da Localidade</a></h2>
+<ul>
+<li>Permite acelerar os acessos à memória através de uma hierarquia;
+<ul>
+<li>&quot;Os programas tendem a aceder a uma porção limitada de memória num dado período de tempo&quot;.</li>
+</ul>
+</li>
+<li>Permite utilizar memória mais rápida para armazenar a informação usada mais frequentemente/recentemente;</li>
+<li>Permite tirar partido da largura de banda, uma vez que a informação transferida entre diferentes níveis da hierarquia é efetuada por blocos.</li>
+</ul>
+<h3 id="localidade-temporal"><a class="header" href="#localidade-temporal">Localidade Temporal</a></h3>
+<p>Um elemento de memória acedido pelo processador será, com grande probabilidade, acedido de novo num futuro próximo;</p>
+<ul>
+<li><strong>Exemplos</strong>:
+<ul>
+<li>Tanto as instruções dentro dos ciclos, como as variáveis usadas como contadores de ciclos, são acedidas repetidamente em curtos intervalos de tempo.</li>
+</ul>
+</li>
+<li><strong>Consequência</strong>:
+<ul>
+<li>A 1ª vez que um elemento de memória é acedido deve ser lido do nível mais baixo (p.e. da memória central);</li>
+<li>Da 2ª vez que é acedido, no entanto, é muito provável que este se encontre em <em>cache</em>, evitando-se assim o tempo de leitura da memória central.</li>
+</ul>
+</li>
+</ul>
+<h3 id="localidade-espacial"><a class="header" href="#localidade-espacial">Localidade Espacial</a></h3>
+<p>Se um elemento de memória é acedido pelo CPU, então elementos com endereços na sua proximidade serão, com grande probabilidade, acedidos num futuro próximo.</p>
+<ul>
+<li><strong>Exemplos</strong>:
+<ul>
+<li>As instruções do programa são, normalmente, acedidas em sequência, assim como, na maior parte dos programas, os elementos de vetores/matrizes.</li>
+</ul>
+</li>
+<li><strong>Consequência</strong>:
+<ul>
+<li>A 1ª vez que um elemento de memória é acedido, deve ser lido do nível mais baixo (p.e. memória central), no entanto, não será lido sozinho, mas sim com um bloco de elementos com endereços na sua vizinhança.</li>
+<li>Se o processador, nos próximos ciclos, aceder a um endereço vizinho do anterior (p.e. próxima instrução ou próximo elemento de um vetor), a probabiliade desse elemento já estar em <em>cache</em> é elevada.</li>
+</ul>
+</li>
+</ul>
+<h3 id="inclusão"><a class="header" href="#inclusão">Inclusão</a></h3>
+<ul>
+<li>Os dados contidos num nível mais próximo do processador são um subconjunto dos dados contidos no nível anterior;</li>
+<li>O nível mais baixo contém a totalidade dos dados;</li>
+<li>Os dados são copiados entre níveis em blocos.</li>
+</ul>
+<p><img src="images/hierarquia_mem.png" alt="image Níveis hierárquicos" /></p>
+<h3 id="terminologia"><a class="header" href="#terminologia">Terminologia</a></h3>
+<ul>
+<li><strong>Linha</strong>: A <em>cache</em> encontra-se dividida em linhas. Cada linha terá o seu endereço (índice) e tem a capacidade de um bloco;</li>
+<li><strong>Bloco</strong>: Quantidade de informação que é transferida de cada vez da memória central para a <em>cache</em> (ou entre níveis de <em>cache</em>). É igual à capacidade da linha;</li>
+<li><em><strong>Hit</strong></em>: Diz-se que ocorreu um <em>hit</em> quando o elemento de memória acedido pelo CPU se encontra em <em>cache</em>;</li>
+<li><em><strong>Miss</strong></em>: Diz-se que ocorreu um <em>miss</em> quando o elemento de memória acedido pela CPU não se encontra em <em>cache</em>, sendo necessário lê-lo do nível inferior da hierarquia.</li>
+<li><em><strong>Hit Rate</strong></em>: Percentagem de <em>hits</em> ocorridos relativamente ao total de acessos à memória;</li>
+<li><em><strong>Miss Rate</strong></em>: Percentagem de <em>misses</em> ocorridos relativamente ao total de acessos à memória. (\( Miss\ Rate\ = 1 - hit\ rate \));</li>
+<li><em><strong>Hit Time</strong></em>: Tempo necessário para aceder à <em>cache</em>, incluindo o tempo necessário para determinar se o elemento a que o CPU está a aceder se encontra, ou não, em <em>cache</em>;</li>
+<li><em><strong>Miss Penalty</strong></em>: Tempo necessário para carregar um bloco da memória central (ou de um nível inferior) para a <em>cache</em> quando ocorre um <em>miss</em>.</li>
+</ul>
+<h2 id="causas-de-misses"><a class="header" href="#causas-de-misses">Causas de <em>Misses</em></a></h2>
+<ul>
+<li>Os <strong>3 C's</strong>:
+<ul>
+<li><strong>Obrigatória</strong>;
+<ul>
+<li>Primeira referência ao bloco.</li>
+</ul>
+</li>
+<li><strong>Capacidade</strong>;
+<ul>
+<li>Blocos que são descartados e mais tarde são necessários.</li>
+</ul>
+</li>
+<li><strong>Conflito</strong>;
+<ul>
+<li>O programa faz repetidas referências a endereços de diferentes blocos de forma a mapear a mesma localização em <em>cache</em>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Coerência</strong>:
+<ul>
+<li>Diferentes processadores devem ver o mesmo valor na mesma localização;</li>
+<li>Duas fontes: <em>true-sharing</em> e <em>false-sharing</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="multilevel-caches"><a class="header" href="#multilevel-caches"><em>Multilevel Caches</em></a></h2>
+<p>De forma a evitar o máximo de <em>misses</em> possível, opta-se por uma arquitetura de <em>caches multilevel</em>. Assim, tem-se os seguintes níveis:</p>
+<ul>
+<li><em>Cache</em> primária presa à CPU;
+<ul>
+<li>Muito pequena, mas rápida.</li>
+</ul>
+</li>
+<li><em>Cache</em> de nível 2;
+<ul>
+<li>Serve os <em>misses</em> da <em>cache</em> de nível 1;</li>
+<li>Maior que a anterior, mas mais lenta, no entanto, mais rápida que a seguinte ou que a memória principal.</li>
+</ul>
+</li>
+<li><em>Cache</em> de nível 3 (em alguns casos, não existe e poderá já ser a memória principal);
+<ul>
+<li>Serve os <em>misses</em> da <em>cache</em> de nível 2;</li>
+<li>Maior que a anterior, mas mais lenta, sendo mais rápida que a memória principal.</li>
+</ul>
+</li>
+<li>Memória Principal.
+<ul>
+<li>Serve os <em>misses</em> da <em>cache</em> de nível 3 ou, caso esta não exista, os <em>misses</em> da <em>cache</em> de nível 2.</li>
+</ul>
+</li>
+</ul>
+<p><img src="images/3_level_cache_examples.png" alt="image Exemplos" /></p>
+<h3 id="desempenho"><a class="header" href="#desempenho">Desempenho</a></h3>
+<p>\[ CPU_{exec-time}=(CPU_{clock-cycles} + Mem_{stall-cycles}) \times Clock\ cycle\ time \]
+\[ CPU_{exec-time}=(IC \times CPI_{CPU} + \frac{Mem_{stall-cycles}}{Instr}) \times Clock\ cycle\ time \]</p>
+<ul>
+<li>Com a introdução de uma <em>cache single-level</em>:
+\[ Mem_{stall-cycles} = IC \times \dots Miss\ rate \dots Mem\ accesses\ \dots Miss\ penalty \dots \]
+\[ Mem_{stall-cycles} = IC \times \frac{Misses}{Instruction} \times Miss\ Penalty \]
+\[ \frac{Misses}{Instruction} = \frac{Miss\ rate \times Memory\ accesses}{Instruction\ Count} = Miss\ Rate \times \frac{Memory\ Accesses}{Instruction} \]</li>
+</ul>
+<p>Para cada nível \( i \) adicional de <em>cache</em>:</p>
+<p>\[ Mem_{accesses}<em>{level</em>{i}} = \frac{Misses}{Instruction_{level_{i - 1}}} \]
+\[ Miss_{penalty}<em>{level</em>{i}} = (Hit\ rate \times Hit\ time \times Miss\ rate \times Miss\ penalty)<em>{level</em>{i + 1}} \]</p>
+<h3 id="miss-rates"><a class="header" href="#miss-rates"><em>Miss Rates</em></a></h3>
+<ul>
+<li>
+<p><em>Local Miss Rate</em></p>
+<ul>
+<li>Dado pelo número de <em>misses</em> na <em>cache</em> dividido pelo total de acessos à <em>cache</em>;</li>
+<li>Para o primeiro nível será igual ao \( Miss\ rate_{L1} \) e para o segundo será \( Miss\ rate_{L2} \).</li>
+</ul>
+</li>
+<li>
+<p><em>Global Miss Rate</em></p>
+<ul>
+<li>Dado pelo número de <em>misses</em> na <em>cache</em> dividido pelo total de acessos à memória gerados pela PU;</li>
+<li>Para o primeiro nível será igual ao \( Miss\ rate_{L1} \), no entanto, para o segundo já será \( Miss\ rate_{L1} \times Miss\ rate_{L2} \).</li>
+</ul>
+</li>
+</ul>
+<h2 id="desempenho-1"><a class="header" href="#desempenho-1">Desempenho</a></h2>
+<p>Como é que a hierarquia de memória influencia o \( T_{exec} \)?</p>
+<ul>
+<li>Cada acesso à memória irá originar ciclos adicionais na execução do programa (\(  \#CC_{MEM} \)) devido aos <em>misses</em>:</li>
+</ul>
+<p>\[ T_{exec} = ( \#CC +  \#CC_{MEM}) \times T_{CC} \]</p>
+<ul>
+<li>Cada <em>miss</em> implicará um aumento do \(  \#CC \) em ciclos de <em>miss penalty</em>, logo:</li>
+</ul>
+<p>\[  \#CC_{MEM} = no.\ miss \times miss\ penalty \]</p>
+<p>Sendo que, o \( no.\ miss \) será dado por:</p>
+<p>\[ miss\ rate \times no.\ acessos\ mem \]</p>
+<ul>
+<li>Assim, visto que \(  \#CC =  \#I \times CPI \), temos que:</li>
+</ul>
+<p>\[ T_{exec} =  \#I \times (CPI_{CPU} + CPI_{MEM}) \times T_{CC} \]</p>
+<ul>
+<li>
+<p>Em que:</p>
+<ul>
+<li>\( CPI_{CPU} \): número de ciclos que o processador precisa, em média, para executar cada instrução;</li>
+<li>\( CPI_{MEM} \): número de ciclos que o processador precisa de parar, em média, para esperar por dados da memória, visto que não foi capaz de encontrar estes em <em>cache</em>. Vulgarmente, designam-se por <em>memory stall cycles</em> ou <em>wait states</em>.</li>
+</ul>
+</li>
+<li>
+<p>Podemos calcular o \( CPI_{MEM} \) da seguinte forma:</p>
+</li>
+</ul>
+<p>\[ CPI_{MEM} = \% acessos\ Mem \times miss\ rate \times miss\ penalty \]</p>
+<ul>
+<li>De notar que os acessos à memória devem-se a:
+<ul>
+<li>Acesso a dados (instruções de <em>Load</em> ou <em>Store</em>);</li>
+<li>Busca de instruções.</li>
+</ul>
+</li>
+<li>Como estes têm comportamentos diferentes, usam-se percentagens diferentes:
+<ul>
+<li><strong>Dados</strong>: Apenas uma determinada percentagem de instruções irá aceder à memória (\( \%Mem \)), pelo que, \( missrate_D \) referir-se-á ao acesso a dados;</li>
+<li><strong>Instruções</strong>: Todas as instruções são lidas da memória, logo a percentagem de acesso à memória será de 100%, \( missrate_I \) referir-se-á ao acesso às instruções;</li>
+<li>Geralmente, a \( missrate_I \) é menor que a \( missrate_D \) devido à utilização da localidade espacial.</li>
+</ul>
+</li>
+<li>Temos, então:</li>
+</ul>
+<p>\[ CPI_{MEM} = (missrate_I + \% Mem \times missrate_D) \times misspenalty \]</p>
+<h2 id="coerência-na-cache"><a class="header" href="#coerência-na-cache">Coerência na <em>Cache</em></a></h2>
+<ul>
+<li><strong>Coerência</strong>
+<ul>
+<li>Todas as leituras de um processador devem retornar o valor escrito mais recentemente;</li>
+<li>Escritas para a mesma localização por dois processadores devem ser vistas na mesma ordem por todos os processadores;</li>
+<li>Ou seja, a coerência deverá definir o comportamento para escritas e leituras na mesma localização da memória.</li>
+</ul>
+</li>
+<li><strong>Consistência</strong>
+<ul>
+<li>Ocorre quando um valor escrito deverá ser devolvido por uma leitura;</li>
+<li>Se um processador escrever numa localização A e, posteriormente, numa localização B, qualquer processador que vir o novo valor de B, deverá também ver o valor de A;</li>
+<li>Ou seja, a consistência deverá definir o comportamento para escritas e leituras respeitando o acesso a outras localizações de memórias.</li>
+</ul>
+</li>
+</ul>
+<h3 id="forçar-a-coerência"><a class="header" href="#forçar-a-coerência">Forçar a Coerência</a></h3>
+<ul>
+<li>Uma <em>cache</em> coerente providencia:
+<ul>
+<li>Migrações: movimentos de dados;</li>
+<li>Replicações: múltiplas cópias dos dados.</li>
+</ul>
+</li>
+<li>Protocolos para implementar coerência em <em>caches</em>:
+<ul>
+<li><em>Directory Based</em>
+<ul>
+<li>Manter o estado partilhado de cada bloco numa única localização;</li>
+</ul>
+</li>
+<li><em>Snooping</em>
+<ul>
+<li>Cada <em>core</em> deverá seguir o estado de partilha de cada bloco.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="otimizações-básicas"><a class="header" href="#otimizações-básicas">Otimizações Básicas</a></h2>
+<ul>
+<li>Maior tamanho dos blocos;
+<ul>
+<li>Reduz o número de <em>misses</em> obrigatórias;</li>
+<li>Aumenta a capacidade e as <em>misses</em> por conflito, bem como a <em>miss penalty</em>.</li>
+</ul>
+</li>
+<li>Aumentar o tamanho total da <em>cache</em> para reduzir a <em>miss rate</em>;
+<ul>
+<li>Aumenta o <em>hit time</em> e o consumo energético.</li>
+</ul>
+</li>
+<li>Maior associatividade;
+<ul>
+<li>Reduz as <em>misses</em> por conflito;</li>
+<li>Aumenta o <em>hit time</em> e o consumo energético.</li>
+</ul>
+</li>
+<li>Maior número de níveis de <em>cache</em>;
+<ul>
+<li>Reduz o tempo médio de acesso à memória.</li>
+</ul>
+</li>
+<li>Dar prioridade a <em>misses</em> de leitura ao invés de <em>misses</em> de escrita;
+<ul>
+<li>Reduz a <em>miss penalty</em>.</li>
+</ul>
+</li>
+<li>Evitar a tradução de endereços ao fazer indexação na <em>cache</em>:
+<ul>
+<li>Reduz o <em>hit time</em>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="tecnologias-de-memória-e-otimizações"><a class="header" href="#tecnologias-de-memória-e-otimizações">Tecnologias de Memória e Otimizações</a></h2>
+<ul>
+<li>Métricas de desempenho:
+<ul>
+<li>Latência é uma preocupação da <em>cache</em>;</li>
+<li>Largura de banda é uma preocupação dos multi-processadores e I/O;</li>
+<li>Tempo de acesso;
+<ul>
+<li>Tempo entre um pedido de leitura e a chegada da <em>word</em> pretendida.</li>
+</ul>
+</li>
+<li>Tempo de ciclo.
+<ul>
+<li>Tempo mínimo entre pedidos não relacionados à memória.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A memória <em>SRAM</em> tem uma baixa latência, pelo que é utilizada para <em>cache</em>;</li>
+<li>Organizando os <em>chips</em> de <em>DRAM</em> em diversas pilhas providenciará uma grande largura de banda que deve ser utilizada para a memória principal.</li>
+<li><strong>SRAM</strong>:
+<ul>
+<li>Precisa de pouca energia para reter o <em>bit</em>;</li>
+<li>Precisa de 6 transístores por <em>bit</em>.</li>
+</ul>
+</li>
+<li><strong>DRAM</strong>:
+<ul>
+<li>Deve ser reescrita depois de lida;</li>
+<li>Deve ser atualizada de forma periódica;
+<ul>
+<li>+/- 8ms (cerca de 5% do tempo);</li>
+<li>Cada linha pode ser atualizada em simultâneo.</li>
+</ul>
+</li>
+<li>Um transístor por <em>bit</em>;</li>
+<li>As linhas de endereços são multiplexadas.
+<ul>
+<li>Metade superior do endereço: <em>row access strobe</em> (RAS);</li>
+<li>Metade inferior do endereço: <em>column access strobe</em> (CAS).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="memória-flash"><a class="header" href="#memória-flash">Memória <em>Flash</em></a></h2>
+<ul>
+<li>Tipo de EEPROM;</li>
+<li>Tipos:
+<ul>
+<li><strong>NAND</strong> (mais densa);</li>
+<li><strong>NOR</strong> (mais rápida).</li>
+</ul>
+</li>
+</ul>
+<h2 id="otimizações-avançadas"><a class="header" href="#otimizações-avançadas">Otimizações Avançadas</a></h2>
+<ul>
+<li>Reduzir o <em>hit time</em>;
+<ul>
+<li><em>Caches</em> de primeiro nível mais pequenas e simples;</li>
+<li>Implementação de <em>way predict</em>.
+<ul>
+<li>Especulativamente, seleciona um caminho dos disponíveis antes de iniciar um acesso normal à <em>cache</em>. Ao seguir apenas o caminho previsto, em vez de todos os disponíveis, poupará a nível energético.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Aumentar a largura de banda;
+<ul>
+<li>Implementação de <em>pipelined caches</em>, <em>multibanked caches</em>, <em>non-blocking caches</em>.</li>
+</ul>
+</li>
+<li>Reduzir a <em>miss penalty</em>;
+<ul>
+<li>Ter, primeiramente, a <em>critical word</em>, juntar os <em>buffers</em> de escrita.</li>
+</ul>
+</li>
+<li>Reduzir a <em>miss rate</em>;
+<ul>
+<li>Otimizações do compilador.</li>
+</ul>
+</li>
+<li>Reduzir a <em>miss penalty</em> ou a <em>miss rate</em> através de paralelismo.
+<ul>
+<li><em>Hardware</em> ou compilador fazem <em>prefetching</em>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="resumo"><a class="header" href="#resumo">Resumo</a></h2>
+<p><img src="images/summary_memhier.png" alt="image Resumo" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="chapter_4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="chapter_4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
