@@ -97,7 +97,8 @@ $$Mem_{stall\-cycles} = IC \times \dots Miss\ rate \dots Mem\ accesses\ \dots Mi
 $$Mem_{stall\-cycles} = IC \times \frac{Misses}{Instruction} \times Miss\ Penalty$$
 $$\frac{Misses}{Instruction} = \frac{Miss\ rate \times Memory\ accesses}{Instruction\ Count} = Miss\ Rate \times \frac{Memory\ Accesses}{Instruction}$$
 
-- Para cada nível $i$ adicional de *cache*:
+Para cada nível $i$ adicional de *cache*:
+
 $$Mem\_{accesses}_{level_i} = \frac{Misses}{Instruction_{level_i - 1}}$$
 $$Miss\_{penalty}_{level_i} = (Hit\ rate \times Hit\ time \times Miss\ rate \times Miss\ penalty)_{level_i + 1}$$
 
