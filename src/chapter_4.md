@@ -1,4 +1,4 @@
-# Paralismo de Dados e *Multithreading* em Uniprocessadores
+# Paralelismo de Dados e *Multithreading* em Uniprocessadores
 
 ## Taxonomia de Flynn
 
