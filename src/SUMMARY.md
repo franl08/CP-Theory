@@ -11,3 +11,4 @@
 - [Programação em Memória Distribuída com Passagem de Mensagens](./chapter_9.md)
 - [Algoritmos Paralelos (*Sorting*)](./chapter_10.md)
 - [De *Multicore* para *Manycore*](./chapter_11.md)
+- [Sistemas Top HPC nas listas do TOP500](./chapter_12.md)
