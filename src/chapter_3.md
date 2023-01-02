@@ -99,8 +99,8 @@ $$\frac{Misses}{Instruction} = \frac{Miss\ rate \times Memory\ accesses}{Instruc
 
 Para cada nível $i$ adicional de *cache*:
 
-$$Mem\_{accesses}_{level_i} = \frac{Misses}{Instruction_{level_i - 1}}$$
-$$Miss\_{penalty}_{level_i} = (Hit\ rate \times Hit\ time \times Miss\ rate \times Miss\ penalty)_{level_i + 1}$$
+$$Mem\_{accesses}_{level_{i}} = \frac{Misses}{Instruction_{level_{i - 1}}$$
+$$Miss\_{penalty}_{level_{i}} = (Hit\ rate \times Hit\ time \times Miss\ rate \times Miss\ penalty)_{level_{i + 1}}$$
 
 
 ### *Miss Rates*
